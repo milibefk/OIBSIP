@@ -30,3 +30,28 @@ document.getElementById('convertBtn').addEventListener('click', function() {
     // Display result
     resultDiv.textContent = `${temperature} ${convertedUnit} is equal to: ${convertedValue}`;
 });
+
+// Example function to display weather information
+function displayWeather() {
+    const weatherInfo = document.getElementById('weather-info');
+    // Mock weather data (Replace with actual API calls for real weather info)
+    weatherInfo.textContent = "Current Weather: 25°C, Clear Sky";
+}
+
+window.onload = displayWeather; // Load weather information on page load
+function displayWeather() {
+    const weatherInfo = document.getElementById('weather-info');
+    const apiKey = '7236a979092c53c0b15a4c1a13583c30';
+    const city = 'Ethiopia'; // Replace with a dynamic city if needed
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            weatherInfo.textContent = `Current Weather in ${data.name}: ${data.main.temp}°C, ${data.weather[0].description}`;
+        })
+        .catch(error => {
+            weatherInfo.textContent = "Weather information not available.";
+            console.error('Error fetching weather data:', error);
+        });
+}
